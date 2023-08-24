@@ -13,6 +13,7 @@ public sealed class HandleNewOrders : IConsumer<OrderPlaced>
     public Task Consume(ConsumeContext<OrderPlaced> context)
     {
         _logger.LogInformation("Event: {}", context.Message);
+        // TODO notify customers
         return Task.CompletedTask;
     }
 }

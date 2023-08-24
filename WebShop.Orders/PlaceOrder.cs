@@ -23,8 +23,8 @@ public sealed record OrderRequest(Guid Id, OrderRequest.Item[] Items)
 {
     public sealed record Item(string SKU, int Amount)
     {
-        // TODO use catalog to determine name price 
         public Order.Item ToOrderItem() =>
+            // TODO use catalog to determine name price 
             new(Sku: SKU, Name: string.Empty, Amount: Amount, Price: 0m);
     }
 
@@ -32,7 +32,14 @@ public sealed record OrderRequest(Guid Id, OrderRequest.Item[] Items)
         new(Id, time, Items.Select(i => i.ToOrderItem( /* catalog */)).ToImmutableList());
 }
 
-public sealed record OrderPlaced(Guid Id) // Events should be light-weight; ideally only an ID
+/**
+ * Event - It's a (domain) contract
+ *
+ * This will be serialized / deserialized as a message.
+ *
+ * Further, messages must be light-weight; ideally only an ID.
+ */
+public sealed record OrderPlaced(Guid Id)
 {
     internal OrderPlaced(Order order) : this(order.Id) { }
 }

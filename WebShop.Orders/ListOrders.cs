@@ -7,6 +7,7 @@ public static class ListOrders
 {
     public static Delegate HandleRequest => async (OderStore orders, [FromQuery] int? take) =>
     TypedResults.Ok(
-        new { RecentOrders = await orders.Recent(take ?? 1) }
+        // TODO better use a dedicated response type instead of exposing internal domain types
+        new { RecentOrders = await orders.Recent(take ?? 1) }  
     );
 }
