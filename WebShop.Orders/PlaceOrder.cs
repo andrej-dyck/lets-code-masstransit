@@ -7,15 +7,15 @@ namespace WebShop.Orders;
 
 public static class PlaceOrder
 {
-    public static Delegate HandleRequest => async (IBus bus, OderStore orders, UtcNow utcNow, OrderRequest request) =>
+    public static Delegate HandleRequest => async (IPublishEndpoint events, OderStore orders, UtcNow utcNow, OrderRequest request) =>
     {
         var order = request.ToOrder(utcNow());
 
         // TODO configure outbox pattern
         await orders.Save(order);
-        await bus.Publish(new OrderPlaced(order));
+        await events.Publish(new OrderPlaced(order));
 
-        return TypedResults.Ok(new { OrderId = request.Id });
+        return TypedResults.Ok(new { OrderId = order.Id });
     };
 }
 
