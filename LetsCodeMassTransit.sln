@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.HttpApi", "WebShop.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Orders", "WebShop.Orders\WebShop.Orders.csproj", "{E9617EFC-DE1A-4B94-AC0E-6AD968117DB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Notification", "WebShop.Notification\WebShop.Notification.csproj", "{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Notifications", "WebShop.Notifications\WebShop.Notifications.csproj", "{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

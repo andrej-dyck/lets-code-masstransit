@@ -1,6 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\WebShop.Notifications\WebShop.Notifications.csproj" />
     <ProjectReference Include="..\WebShop.Orders\WebShop.Orders.csproj" />
   </ItemGroup>
   <ItemGroup>
