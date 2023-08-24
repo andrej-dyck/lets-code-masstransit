@@ -1,11 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Privacy.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
+    <ProjectReference Include="..\WebShop.Orders\WebShop.Orders.csproj" />
   </ItemGroup>
 </Project>

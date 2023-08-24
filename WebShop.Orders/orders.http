@@ -1,0 +1,12 @@
+﻿### Create an order
+POST {{url}}/api/orders
+Content-Type: application/json
+
+{
+  "id": "{{$random.uuid}}",
+  "items": [
+    {"sku": "{{$random.alphanumeric(5)}}", "amount": "{{$random.integer(10)}}"},
+    {"sku": "{{$random.alphanumeric(5)}}", "amount": "{{$random.integer(10)}}"},
+    {"sku": "{{$random.alphanumeric(5)}}", "amount": "{{$random.integer(10)}}"}
+  ]
+}

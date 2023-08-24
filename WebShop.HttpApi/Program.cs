@@ -1,4 +1,5 @@
 using WebShop.HttpApi;
+using WebShop.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 {
     app.UseHttpLogging();
+    app.MapGroup("api").MapOrderEndpoints();
 }
 
 app.Run();
