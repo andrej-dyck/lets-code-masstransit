@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
             c.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
         }
     );
+    builder.Services.AddOrdersFeature();
 }
 
 var app = builder.Build();

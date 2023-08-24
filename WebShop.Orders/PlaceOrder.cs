@@ -1,7 +1,6 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Builder;
+﻿using System.Collections.Immutable;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 
 namespace WebShop.Orders;
 
@@ -16,18 +15,32 @@ public static class OrderEndpoints
 
 public static class PlaceOrder
 {
-    public static Delegate HandleRequest => (IBus bus, OrderRequest request) =>
+    public static Delegate HandleRequest => (IBus bus, OderStore orders, OrderRequest request) =>
     {
-        // TODO store orders (in-memory)
-        bus.Publish(new OrderPlaced(request.id));
+        var order = request.ToOrder();
+
         // TODO configure outbox pattern
-        return TypedResults.Ok(new { OrderId = request.id });
+        orders.Save(order);
+        bus.Publish(new OrderPlaced(order));
+
+        return TypedResults.Ok(new { OrderId = request.Id });
     };
 }
 
-public sealed record OrderPlaced(Guid id);
-
-public sealed record OrderRequest(Guid id, OrderRequest.Item[] Items)
+public sealed record OrderRequest(Guid Id, OrderRequest.Item[] Items)
 {
-    public sealed record Item(string SKU, int Amount);
+    public sealed record Item(string SKU, int Amount)
+    {
+        // TODO use catalog to determine name price 
+        public Order.Item ToOrderItem() =>
+            new(Sku: SKU, Name: string.Empty, Amount: Amount, Price: 0m);
+    }
+
+    public Order ToOrder(/* Catalog catalog */) =>
+        new(Id, Items.Select(i => i.ToOrderItem( /* catalog */)).ToImmutableList());
+}
+
+public sealed record OrderPlaced(Guid Id) // Events should be light-weight; ideally only an ID
+{
+    internal OrderPlaced(Order order) : this(order.Id) { }
 }
