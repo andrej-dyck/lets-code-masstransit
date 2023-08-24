@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Orders", "WebShop.O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebShop.Notifications", "WebShop.Notifications\WebShop.Notifications.csproj", "{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet.Extensions", "DotNet.Extensions\DotNet.Extensions.csproj", "{6C1C263A-F2EA-4390-918A-E637A4C65CA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +33,9 @@ Global
 		{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F067AC32-BC45-48EC-9A68-8C4DA01DDB60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1C263A-F2EA-4390-918A-E637A4C65CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1C263A-F2EA-4390-918A-E637A4C65CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1C263A-F2EA-4390-918A-E637A4C65CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1C263A-F2EA-4390-918A-E637A4C65CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

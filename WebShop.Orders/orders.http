@@ -1,4 +1,4 @@
-﻿### Create an order
+﻿### Place an order
 POST {{url}}/api/orders
 Content-Type: application/json
 
@@ -10,3 +10,7 @@ Content-Type: application/json
     {"sku": "{{$random.alphanumeric(5)}}", "amount": "{{$random.integer(10)}}"}
   ]
 }
+
+### List orders
+GET {{url}}/api/orders?take=10
+Accept: application/json

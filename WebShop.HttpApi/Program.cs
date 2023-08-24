@@ -1,3 +1,4 @@
+using DotNet.Extensions;
 using MassTransit;
 using WebShop.HttpApi;
 using WebShop.Notifications;
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
             c.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
         }
     );
+    builder.Services.AddSingleton<UtcNow>(_ => () => DateTimeOffset.UtcNow);
     builder.Services.AddOrdersFeature();
 }
 

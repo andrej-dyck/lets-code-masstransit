@@ -5,4 +5,7 @@
     <ItemGroup>
       <PackageReference Include="MassTransit.Abstractions" Version="8.1.0" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DotNet.Extensions\DotNet.Extensions.csproj" />
+    </ItemGroup>
 </Project>
