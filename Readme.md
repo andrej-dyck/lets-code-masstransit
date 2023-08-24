@@ -5,7 +5,11 @@
 
 ## Tasks
 
-- Configure a Message Broker (e.g. [RabbitMQ](https://masstransit.io/documentation/transports/rabbitmq))
+1. Create an Invoice Service that listens to Order Created Events
+2. TBD Persist Orders to a Database
+3. TBD Outbox Pattern
+4. TBD Claim Check
+5. Configure a Message Broker (e.g. [RabbitMQ](https://masstransit.io/documentation/transports/rabbitmq))
 
 ## Development
 
