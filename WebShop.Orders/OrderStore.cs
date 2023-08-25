@@ -17,6 +17,38 @@ public sealed record Order(Guid Id, DateTimeOffset Timestamp, IReadOnlyList<Orde
     }
 }
 
+public sealed class ChaosOrderStore : OderStore
+{
+    private readonly OderStore _store;
+    public ChaosOrderStore(OderStore store) => _store = store;
+
+    private sealed class ChaosMonkeyException : Exception
+    {
+        public ChaosMonkeyException(string message) : base(message) { }
+    }
+    
+    public async Task Save(Order order)
+    {
+        if (new Random().Next(0, 10) == 0)
+        {
+            throw new ChaosMonkeyException("Chaos monkey strikes again!");
+        }
+
+        await _store.Save(order);
+    }
+    
+    public async Task<IReadOnlyList<Order>> Recent(int take)
+    {
+        if (new Random().Next(0, 10) == 0)
+        {
+            throw new ChaosMonkeyException("Chaos monkey strikes again!");
+        }
+
+        var orders = await _store.Recent(take);
+        return orders;
+    }
+}
+
 public sealed class OrderInMemoryStore : OderStore
 {
     private readonly ConcurrentDictionary<Guid, Order> _orders = new();
