@@ -7,6 +7,7 @@ public interface OrderStore
 {
     Task Save(Order order);
     Task<IReadOnlyList<Order>> Recent(int take);
+    Task<Order?> ById(Guid id);
 }
 
 public sealed record Order(Guid Id, DateTimeOffset Timestamp, IReadOnlyList<Order.Item> Items)
@@ -22,30 +23,28 @@ public sealed class ChaosOrderStore : OrderStore
     private readonly OrderStore _store;
     public ChaosOrderStore(OrderStore store) => _store = store;
 
-    private sealed class ChaosMonkeyException : Exception
-    {
-        public ChaosMonkeyException(string message) : base(message) { }
-    }
-    
     public async Task Save(Order order)
     {
-        if (new Random().Next(0, 10) == 0)
-        {
-            throw new ChaosMonkeyException("Chaos monkey strikes again!");
-        }
-
+        FailRandomly();
         await _store.Save(order);
     }
-    
-    public async Task<IReadOnlyList<Order>> Recent(int take)
-    {
-        if (new Random().Next(0, 10) == 0)
-        {
-            throw new ChaosMonkeyException("Chaos monkey strikes again!");
-        }
 
-        var orders = await _store.Recent(take);
-        return orders;
+    public Task<IReadOnlyList<Order>> Recent(int take)
+    {
+        FailRandomly();
+        return _store.Recent(take);
+    }
+
+    public Task<Order?> ById(Guid id) => _store.ById(id);
+
+    private static void FailRandomly()
+    {
+        if (new Random().Next(0, 5) == 0) throw new ChaosMonkey();
+    }
+
+    private sealed class ChaosMonkey : Exception
+    {
+        public ChaosMonkey() : base("Chaos monkey strikes again!") { }
     }
 }
 
@@ -63,4 +62,7 @@ public sealed class OrderInMemoryStore : OrderStore
         Task.FromResult<IReadOnlyList<Order>>(
             _orders.Values.OrderByDescending(o => o.Timestamp).ToImmutableList()
         );
+
+    public Task<Order?> ById(Guid id) => 
+        Task.FromResult(_orders.GetValueOrDefault(id));
 }
