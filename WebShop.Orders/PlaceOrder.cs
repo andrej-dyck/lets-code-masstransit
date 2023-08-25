@@ -7,11 +7,15 @@ namespace WebShop.Orders;
 
 public static class PlaceOrder
 {
-    public static Delegate HandleRequest => async (IPublishEndpoint events, OderStore orders, UtcNow utcNow, OrderRequest request) =>
+    public static Delegate HandleRequest => async (
+        IPublishEndpoint events,
+        OderStore orders,
+        UtcNow utcNow,
+        OrderRequest request) =>
     {
         var order = request.ToOrder(utcNow());
 
-        // TODO configure outbox pattern
+        // TODO configure outbox pattern here
         await orders.Save(order);
         await events.Publish(new OrderPlaced(order));
 
@@ -24,11 +28,11 @@ public sealed record OrderRequest(Guid Id, OrderRequest.Item[] Items)
     public sealed record Item(string SKU, int Amount)
     {
         public Order.Item ToOrderItem() =>
-            // TODO use catalog to determine name price 
-            new(Sku: SKU, Name: string.Empty, Amount: Amount, Price: 0m);
+            // TODO use sales catalog to determine name and price 
+            new(Sku: SKU, Name: string.Empty, Amount: Amount, Price: new Random().Next(0, 100));
     }
 
-    public Order ToOrder(DateTimeOffset time /*, Catalog catalog */) =>
+    public Order ToOrder(DateTimeOffset time /*, SalesCatalog catalog */) =>
         new(Id, time, Items.Select(i => i.ToOrderItem( /* catalog */)).ToImmutableList());
 }
 
