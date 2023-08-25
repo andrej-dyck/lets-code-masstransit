@@ -18,7 +18,26 @@ public sealed record Order(Guid Id, DateTimeOffset Timestamp, IReadOnlyList<Orde
     }
 }
 
-public sealed class ChaosOrderStore : OrderStore
+internal sealed class OrderInMemoryStore : OrderStore
+{
+    private readonly ConcurrentDictionary<Guid, Order> _orders = new();
+
+    public Task Save(Order order)
+    {
+        _orders.TryAdd(order.Id, order);
+        return Task.CompletedTask;
+    }
+
+    public Task<IReadOnlyList<Order>> Recent(int take) =>
+        Task.FromResult<IReadOnlyList<Order>>(
+            _orders.Values.OrderByDescending(o => o.Timestamp).ToImmutableList()
+        );
+
+    public Task<Order?> ById(Guid id) => 
+        Task.FromResult(_orders.GetValueOrDefault(id));
+}
+
+internal sealed class ChaosOrderStore : OrderStore
 {
     private readonly OrderStore _store;
     public ChaosOrderStore(OrderStore store) => _store = store;
@@ -46,23 +65,4 @@ public sealed class ChaosOrderStore : OrderStore
     {
         public ChaosMonkey() : base("Chaos monkey strikes again!") { }
     }
-}
-
-public sealed class OrderInMemoryStore : OrderStore
-{
-    private readonly ConcurrentDictionary<Guid, Order> _orders = new();
-
-    public Task Save(Order order)
-    {
-        _orders.TryAdd(order.Id, order);
-        return Task.CompletedTask;
-    }
-
-    public Task<IReadOnlyList<Order>> Recent(int take) =>
-        Task.FromResult<IReadOnlyList<Order>>(
-            _orders.Values.OrderByDescending(o => o.Timestamp).ToImmutableList()
-        );
-
-    public Task<Order?> ById(Guid id) => 
-        Task.FromResult(_orders.GetValueOrDefault(id));
 }
