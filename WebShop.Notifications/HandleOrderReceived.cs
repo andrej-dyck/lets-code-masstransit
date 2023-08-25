@@ -5,10 +5,10 @@ using WebShop.Orders;
 namespace WebShop.Notifications;
 
 // ReSharper disable once UnusedType.Global - Instantiated by MassTransit
-public sealed class HandleNewOrders : IConsumer<OrderPlaced>
+public sealed class HandleOrderReceived : IConsumer<OrderPlaced>
 {
-    private readonly ILogger<HandleNewOrders> _logger;
-    public HandleNewOrders(ILogger<HandleNewOrders> logger) => _logger = logger;
+    private readonly ILogger<HandleOrderReceived> _logger;
+    public HandleOrderReceived(ILogger<HandleOrderReceived> logger) => _logger = logger;
 
     public Task Consume(ConsumeContext<OrderPlaced> context)
     {

@@ -9,7 +9,7 @@ public static class PlaceOrder
 {
     public static Delegate HandleRequest => async (
         IPublishEndpoint events,
-        OderStore orders,
+        OrderStore orders,
         UtcNow utcNow,
         OrderRequest request) =>
     {

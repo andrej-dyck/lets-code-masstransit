@@ -5,7 +5,7 @@ namespace WebShop.Orders;
 
 public static class ListOrders
 {
-    public static Delegate HandleRequest => async (OderStore orders, [FromQuery] int? take) =>
+    public static Delegate HandleRequest => async (OrderStore orders, [FromQuery] int? take) =>
     TypedResults.Ok(
         // TODO better use a dedicated response type instead of exposing internal domain types
         new { RecentOrders = await orders.Recent(take ?? 1) }  

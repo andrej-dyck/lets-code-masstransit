@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace WebShop.Orders;
 
-public interface OderStore
+public interface OrderStore
 {
     Task Save(Order order);
     Task<IReadOnlyList<Order>> Recent(int take);
@@ -17,10 +17,10 @@ public sealed record Order(Guid Id, DateTimeOffset Timestamp, IReadOnlyList<Orde
     }
 }
 
-public sealed class ChaosOrderStore : OderStore
+public sealed class ChaosOrderStore : OrderStore
 {
-    private readonly OderStore _store;
-    public ChaosOrderStore(OderStore store) => _store = store;
+    private readonly OrderStore _store;
+    public ChaosOrderStore(OrderStore store) => _store = store;
 
     private sealed class ChaosMonkeyException : Exception
     {
@@ -49,7 +49,7 @@ public sealed class ChaosOrderStore : OderStore
     }
 }
 
-public sealed class OrderInMemoryStore : OderStore
+public sealed class OrderInMemoryStore : OrderStore
 {
     private readonly ConcurrentDictionary<Guid, Order> _orders = new();
 
